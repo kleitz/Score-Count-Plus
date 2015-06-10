@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class TeamAdd extends ActionBarActivity {
@@ -20,6 +21,10 @@ public class TeamAdd extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_team_add, menu);
         return true;
+    }
+
+    public void setTimer(View view){
+        setContentView(R.layout.set_time);
     }
 
     @Override
