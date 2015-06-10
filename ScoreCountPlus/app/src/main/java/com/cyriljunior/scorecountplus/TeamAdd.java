@@ -1,5 +1,6 @@
 package com.cyriljunior.scorecountplus;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,8 +24,9 @@ public class TeamAdd extends ActionBarActivity {
         return true;
     }
 
-    public void setTimer(View view){
-        setContentView(R.layout.set_time);
+    public void setTimerButton(View view){
+        Intent setTimeIntent = new Intent(this,setTimer.class);
+        startActivity(setTimeIntent);
     }
 
     @Override
