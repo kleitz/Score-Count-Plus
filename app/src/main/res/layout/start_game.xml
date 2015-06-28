@@ -74,7 +74,8 @@
                 android:layout_height="wrap_content"
                 android:text="00"
                 android:textSize="64sp"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp"
+                android:id="@+id/homeScore"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -113,7 +114,8 @@
                 android:layout_height="wrap_content"
                 android:text="00"
                 android:textSize="64sp"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp"
+                android:id="@+id/awayScore"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
