@@ -53,5 +53,5 @@
         android:textColor="#FFFFFF"
         android:background="#039BE5"
         android:layout_marginTop="32dp"
-        android:onClick="setTimerButton"/>
+        android:onClick="btnSetTimer"/>
     </LinearLayout>

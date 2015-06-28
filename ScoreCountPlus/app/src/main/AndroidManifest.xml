@@ -16,7 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".setTimer"/>
+
+        <activity
+            android:name=".setTimer"
+            android:label="Set Timer"/>
+        <activity
+            android:name=".StartGame"
+            android:label="Start Game"/>
     </application>
+
 
 </manifest>
