@@ -10,12 +10,10 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.TextView;
 
-import java.lang.annotation.Target;
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
-/**
- * Created by CyrilJnr on 6/28/15.
- */
+@TargetApi(Build.VERSION_CODES.GINGERBREAD)
+@SuppressLint("NewApi")
 
 
 public class StartGame extends Activity {
@@ -23,14 +21,17 @@ public class StartGame extends Activity {
 //Create Text relations to the various Text Views
     TextView homeTeamView;
     TextView awayTeamView;
-    TextView timer;
+    TextView timing;
 
 
 //Global Variables we'll need
     int homeScore = 0;
     int awayScore = 0;
-    int minute, quarter;
-    int millisecs = minute * 60 * 60;
+    int  quarters;
+    int minutes;
+    long min;
+
+    CounterClass timer;
 
 //Assign TeXt Views to Elements in Java and getExtra from Intent
     @Override
@@ -41,21 +42,34 @@ public class StartGame extends Activity {
     //Assign Text Views to the Elements we created
         homeTeamView = (TextView)findViewById(R.id.home_team_view);
         awayTeamView = (TextView)findViewById(R.id.away_team_view);
-        timer = (TextView) findViewById(R.id.timer);
+        timing = (TextView) findViewById(R.id.timer);
 
     //GetExtras from previous Intent
         Intent StartGame = getIntent();
         String homeTeam = StartGame.getStringExtra("homeTeam");
         String awayTeam = StartGame.getStringExtra("awayTeam");
-        minute = StartGame.getIntExtra("minutes", 0);
-        quarter = StartGame.getIntExtra("quarters",0);
+        quarters = StartGame.getIntExtra("quarters", 0);
+        minutes = StartGame.getIntExtra("minutes", 0);
+        min = StartGame.getLongExtra("min", 0);
 
 
         homeTeamView.setText(homeTeam);
         awayTeamView.setText(awayTeam);
-        timer.setText(minute + ":00");
+        timing.setText("00:" + minutes + ":00");
+
+        timer = new CounterClass(min, 1000);
+
     }
 
+
+
+
+    public void startTimer(View view){
+        timer.start();
+    }
+    public void resetTimer(View view){
+        timer.cancel();
+    }
 
 
 
@@ -101,6 +115,45 @@ public class StartGame extends Activity {
     public void onePointAway(View view){
         pointAddAway(1);
         displayScoreAway(awayScore);
+    }
+
+
+
+
+
+
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+    @SuppressLint("NewApi")
+    public class CounterClass extends CountDownTimer{
+
+
+
+        public CounterClass(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @SuppressLint("NewApi")
+        @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+            long millis = millisUntilFinished;
+
+
+
+
+            String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
+                    TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                    TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+            System.out.println(hms);
+            timing.setText(hms);
+        }
+
+        @Override
+        public void onFinish() {
+            timing.setText("00:00:00");
+
+        }
     }
 
 }

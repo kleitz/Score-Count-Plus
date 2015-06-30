@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
+
 
 public class setTimer extends Activity {
 
@@ -31,7 +33,9 @@ public class setTimer extends Activity {
     }
 
     int quarter = 1;
+    int m;
     int minutes = 1;
+
 
     public void displayQuarter(int quarters) {
         TextView quarter = (TextView) findViewById(R.id.quarter_text_view);
@@ -82,10 +86,16 @@ public class setTimer extends Activity {
         displayMinutes(minutes);
     }
 
+
+
     public void startGame(View view){
+        m = minutes * 60000;
+        long min = m;
+
         Intent intent = new Intent(this,StartGame.class);
-        intent = intent.putExtra("minutes", minutes);
         intent = intent.putExtra("quarter", quarter);
+        intent = intent.putExtra("minutes", minutes);
+        intent = intent.putExtra("min", min);
         intent = intent.putExtra("homeTeam", homeTeamView.getText().toString());
         intent = intent.putExtra("awayTeam", awayTeamView.getText().toString());
         startActivity(intent);
