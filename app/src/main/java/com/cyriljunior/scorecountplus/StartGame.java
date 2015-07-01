@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.concurrent.TimeUnit;
@@ -21,15 +22,18 @@ public class StartGame extends Activity {
 //Create Text relations to the various Text Views
     TextView homeTeamView;
     TextView awayTeamView;
-    TextView timing;
+    TextView timer_text_view;
+    TextView quarter_number;
+    Button startButton;
 
 
 //Global Variables we'll need
     int homeScore = 0;
     int awayScore = 0;
-    int  quarters;
+    int  quarter;
     int minutes;
     long min;
+    int i=1;
 
     CounterClass timer;
 
@@ -42,20 +46,23 @@ public class StartGame extends Activity {
     //Assign Text Views to the Elements we created
         homeTeamView = (TextView)findViewById(R.id.home_team_view);
         awayTeamView = (TextView)findViewById(R.id.away_team_view);
-        timing = (TextView) findViewById(R.id.timer);
+        timer_text_view = (TextView) findViewById(R.id.timer);
+        quarter_number = (TextView) findViewById(R.id.quarter_number);
+        startButton = (Button) findViewById(R.id.startButton);
 
     //GetExtras from previous Intent
         Intent StartGame = getIntent();
         String homeTeam = StartGame.getStringExtra("homeTeam");
         String awayTeam = StartGame.getStringExtra("awayTeam");
-        quarters = StartGame.getIntExtra("quarters", 0);
+        quarter = StartGame.getIntExtra("quarter", 0);
         minutes = StartGame.getIntExtra("minutes", 0);
         min = StartGame.getLongExtra("min", 0);
 
 
         homeTeamView.setText(homeTeam);
         awayTeamView.setText(awayTeam);
-        timing.setText("00:" + minutes + ":00");
+        timer_text_view.setText("00:" + minutes + ":00");
+        quarter_number.setText("1");
 
         timer = new CounterClass(min, 1000);
 
@@ -65,10 +72,17 @@ public class StartGame extends Activity {
 
 
     public void startTimer(View view){
+
         timer.start();
+
     }
     public void resetTimer(View view){
         timer.cancel();
+        homeScore = 0;
+        awayScore = 0;
+        displayScoreHome(0);
+        displayScoreAway(0);
+        timer_text_view.setText("00:" + minutes + ":00");
     }
 
 
@@ -146,12 +160,20 @@ public class StartGame extends Activity {
                     TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
                     TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
             System.out.println(hms);
-            timing.setText(hms);
+            timer_text_view.setText(hms);
         }
 
         @Override
         public void onFinish() {
-            timing.setText("00:00:00");
+            if(i<quarter) {
+                timer_text_view.setText("00:" + minutes + ":00");
+                i++;
+                quarter_number.setText(String.valueOf(i));
+                startButton.setText("Start Quarter " + i);
+
+            }
+            else
+                timer_text_view.setText("FT");
 
         }
     }

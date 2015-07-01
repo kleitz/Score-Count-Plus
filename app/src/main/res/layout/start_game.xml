@@ -12,14 +12,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="quarter 1"
+            android:text="quarter"
             android:textAllCaps="true"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:textSize="16sp"
             android:fontFamily="sans-serif-light"
-            android:id="@+id/quarter_number"
-            android:padding="16dp"/>
+            android:id="@+id/quarter"
+            android:paddingTop="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textAllCaps="true"
+            android:layout_below="@id/quarter"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-light"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/quarter_number"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +37,8 @@
             android:textSize="48sp"
             android:layout_below="@id/quarter_number"
             android:id="@+id/timer"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:padding="8dp"/>
 
     </RelativeLayout>
 
@@ -42,14 +53,15 @@
             android:id="@+id/home_team_view"
             android:fontFamily="sans-serif-light"
             android:layout_weight="6"
-            android:textAllCaps="true"/>
+            android:textAllCaps="true"
+            android:gravity="center_horizontal" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="vs"
             android:fontFamily="sans-serif-light"
             android:layout_weight="1"
-            />
+            android:gravity="center_horizontal" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -57,13 +69,14 @@
             android:id="@+id/away_team_view"
             android:fontFamily="sans-serif-light"
             android:layout_weight="6"
-            android:textAllCaps="true"/>
+            android:textAllCaps="true"
+            android:gravity="center_horizontal" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="32dp">
+        android:layout_marginTop="16dp">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -75,7 +88,8 @@
                 android:text="00"
                 android:textSize="64sp"
                 android:layout_marginBottom="16dp"
-                android:id="@+id/homeScore"/>
+                android:id="@+id/homeScore"
+                android:gravity="center_horizontal" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -115,7 +129,8 @@
                 android:text="00"
                 android:textSize="64sp"
                 android:layout_marginBottom="16dp"
-                android:id="@+id/awayScore"/>
+                android:id="@+id/awayScore"
+                android:gravity="center_horizontal" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -142,9 +157,10 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start"
+        android:text="Start Game"
+        android:id="@+id/startButton"
         android:textAllCaps="true"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginTop="8dp"
         android:onClick="startTimer"/>
 
@@ -153,35 +169,28 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="P"
-            android:fontFamily="sans-serif-light"
-            android:onClick="pauseTimer"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="R"
+            android:text="Reset game"
             android:fontFamily="sans-serif-light"
-            android:onClick="resetTimer"/>
+            android:textAllCaps="true"
+            android:onClick="resetTimer"
+            android:background="#ffff0000"
+            android:textColor="#ffffffff"/>
+
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="C"
+            android:text="END Game"
             android:fontFamily="sans-serif-light"
-            android:onClick="continueTimer"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="N"
-            android:fontFamily="sans-serif-light"
-            android:onClick="next"/>
+            android:textAllCaps="true"
+            android:onClick="next"
+            android:background="#ff000000"
+            android:textColor="#ffffffff" />
     </LinearLayout>
 
 </LinearLayout>
