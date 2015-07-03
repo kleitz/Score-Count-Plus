@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
@@ -33,7 +34,7 @@ public class StartGame extends Activity {
     int  quarter;
     int minutes;
     long min;
-    int i=1;
+    int i = 1;
 
     CounterClass timer;
 
@@ -73,16 +74,26 @@ public class StartGame extends Activity {
 
     public void startTimer(View view){
 
-        timer.start();
+        if(i == 1 && homeScore == 0 && awayScore == 0 || i != 1) {
+            timer.start();
+        }
 
+        else{
+            Toast.makeText(getApplicationContext(),"Reset or End Game First",Toast.LENGTH_LONG).show();
+
+        }
     }
     public void resetTimer(View view){
         timer.cancel();
         homeScore = 0;
         awayScore = 0;
+        i = 1;
         displayScoreHome(0);
         displayScoreAway(0);
+        quarter_number.setText(String.valueOf(i));
         timer_text_view.setText("00:" + minutes + ":00");
+        startButton.setText("Start Game");
+        startButton.setVisibility(View.VISIBLE);
     }
 
 
@@ -132,6 +143,21 @@ public class StartGame extends Activity {
     }
 
 
+    public void endGame(View view){
+        if(i==quarter && homeScore != 0 && awayScore != 0){
+            Intent endGameIntent = new Intent(this, EndGame.class);
+            endGameIntent.putExtra("homeTeamView", homeTeamView.getText().toString());
+            endGameIntent.putExtra("awayTeamView", awayTeamView.getText().toString());
+            endGameIntent.putExtra("homeScore", homeScore);
+            endGameIntent.putExtra("awayScore", awayScore);
+            endGameIntent.putExtra("minutes", minutes);
+            endGameIntent.putExtra("quarter", quarter);
+            startActivity(endGameIntent);
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No Game Recorded", Toast.LENGTH_LONG).show();
+        }
+    }
 
 
 
@@ -172,8 +198,10 @@ public class StartGame extends Activity {
                 startButton.setText("Start Quarter " + i);
 
             }
-            else
+            else {
                 timer_text_view.setText("FT");
+                startButton.setVisibility(View.INVISIBLE);
+            }
 
         }
     }

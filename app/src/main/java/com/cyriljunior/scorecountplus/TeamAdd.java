@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class TeamAdd extends Activity {
@@ -25,11 +26,15 @@ public class TeamAdd extends Activity {
 
 
     public void btnSetTimer(View view){
-        Intent setTimeIntent = new Intent(this,setTimer.class);
-        setTimeIntent.putExtra("homeTeam", homeTeam.getText().toString());
-        setTimeIntent.putExtra("awayTeam", awayTeam.getText().toString());
-        startActivity(setTimeIntent);
-
+        if(homeTeam.getText().toString().isEmpty() && awayTeam.getText().toString().isEmpty()){
+            Toast.makeText(getApplicationContext(),"Enter Home & Away Teams", Toast.LENGTH_LONG).show();
+        }
+        else{
+            Intent setTimeIntent = new Intent(this, setTimer.class);
+            setTimeIntent.putExtra("homeTeam", homeTeam.getText().toString());
+            setTimeIntent.putExtra("awayTeam", awayTeam.getText().toString());
+            startActivity(setTimeIntent);
+        }
 
     }
 
