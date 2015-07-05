@@ -1,11 +1,12 @@
 package com.cyriljunior.scorecountplus;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by CyrilJnr on 7/2/15.
@@ -22,8 +23,10 @@ public class EndGame extends Activity {
     TextView awayScoreView;
 
 //Global Variables we'll need
-    String homeTeam, awayTeam;
+    String homeTeam, awayTeam, hScore, aScore;
     int homeScore, awayScore, minutes, quarter;
+
+    GameDatabaseAdapter gameHelper;
 
 
 
@@ -32,6 +35,8 @@ public class EndGame extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_game);
+        gameHelper = new GameDatabaseAdapter(this);
+
 
     //Assign TextView elements to xml TextViews
         quarterView = (TextView)findViewById(R.id.end_game_quarter_view);
@@ -58,6 +63,9 @@ public class EndGame extends Activity {
         homeTeamView.setText(homeTeam);
         awayTeamView.setText(awayTeam);
 
+        hScore = String.valueOf(homeScore);
+        aScore = String.valueOf(awayScore);
+
     }
 
 
@@ -68,8 +76,17 @@ public class EndGame extends Activity {
 
 
     public void saveGame(View view){
+        long id = gameHelper.insertData(homeTeam, awayTeam, homeScore, awayScore);
 
+        if(id<0){
+            Message.message(this, "Unable to Save Game");
+        }
+        else{
+            Message.message(this,"Game Successfully Saved");
         }
 
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
+        }
 
 }
